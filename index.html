@@ -2,14 +2,870 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://meedtourpro.online/pc64r_ua/?source=acv-144e4d84d888e53ebbef0c11c-soulnode.net">
-    <script>
-        location.replace("https://meedtourpro.online/pc64r_ua/?source=acv-144e4d84d888e53ebbef0c11c-soulnode.net");
-    </script>
-    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPGRADER - Один в один як у Фігмі</title>
+    <style>
+        :root {
+            --bg-main: #0c0d12;
+            --bg-panel: #14151c;
+            --bg-card: #1a1c24;
+            --accent-yellow: #ffd000;
+            --accent-yellow-hover: #e6bc00;
+            --text-white: #ffffff;
+            --text-gray: #787d91;
+            --border-color: #222530;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- ХЕДЕР --- */
+        header {
+            height: 60px;
+            background-color: var(--bg-panel);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        .logo span { color: var(--accent-yellow); }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+        .stats span { color: #fff; font-weight: 600; margin-left: 4px; }
+        .stats .online::before {
+            content: ''; display: inline-block; width: 6px; height: 6px; 
+            background: #2ed573; border-radius: 50%; margin-right: 6px; transform: translateY(-1px);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-profile-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #1a1c24;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .user-avatar {
+            width: 32px; height: 32px;
+            border-radius: 4px;
+            background: var(--accent-yellow);
+        }
+
+        .user-balance {
+            font-weight: 700;
+            color: var(--accent-yellow);
+        }
+
+        .btn-add-funds {
+            background: #2ed573;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* --- ОСНОВНИЙ КОНТЕНТ --- */
+        .wrapper {
+            display: flex;
+            margin-top: 60px;
+            height: calc(100vh - 60px);
+            width: 100%;
+        }
+
+        /* Лівий Сайдбар */
+        .sidebar {
+            width: 110px;
+            background-color: var(--bg-panel);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 10px 5px;
+            gap: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #222530; border-radius: 2px; }
+
+        .sidebar-item {
+            background: linear-gradient(135deg, #191b24 0%, #111218 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+            font-size: 10px;
+            color: var(--text-gray);
+        }
+        .sidebar-item img { width: 100%; height: 50px; object-fit: contain; }
+
+        /* Робоча зона */
+        .main-workspace {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-main);
+            overflow-y: auto;
+            padding: 25px;
+        }
+
+        /* Зони вибору та Апгрейдер */
+        .upgrade-floor {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .drop-zone {
+            flex: 1;
+            height: 240px;
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .drop-zone .placeholder-text {
+            color: var(--text-gray);
+            font-size: 13px;
+            max-width: 220px;
+            line-height: 1.5;
+            z-index: 2;
+        }
+
+        .drop-zone .bg-icon {
+            position: absolute;
+            font-size: 70px;
+            color: #1c1e29;
+            font-weight: 900;
+            z-index: 1;
+        }
+
+        /* --- ІДЕАЛЬНЕ КОЛЕСО АПГРЕЙДУ --- */
+        .center-wheel-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 260px;
+        }
+
+        /* Зовнішній контейнер крутилки */
+        .wheel-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Сама крутилка (SVG) - НЕ КРУТИТЬСЯ */
+        .wheel-spinner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* СТРІЛКА ЩО КРУТИТЬСЯ */
+        .wheel-ticker-arrow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: none;
+        }
+
+        .wheel-ticker-arrow.spinning {
+            animation: spinTicker 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes spinTicker {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(var(--final-rotation, 0deg)); }
+        }
+
+        /* Центральний текст відсотків */
+        .radial-center-button {
+            position: relative;
+            z-index: 4;
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 900;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .radial-center-button span {
+            color: var(--accent-yellow);
+        }
+
+        /* Фіксована стрілка внизу */
+        .wheel-pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid var(--accent-yellow);
+            filter: drop-shadow(0 0 3px var(--accent-yellow));
+        }
+
+        .btn-action-upgrade {
+            width: 100%;
+            background-color: var(--accent-yellow);
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .btn-action-upgrade:disabled {
+            background-color: #222530;
+            color: var(--text-gray);
+            cursor: not-allowed;
+        }
+
+        /* --- ІНВЕНТАРІ ТА МАГАЗИН --- */
+        .inventory-floor {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .inventory-box {
+            flex: 1;
+            min-width: 340px;
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+        }
+
+        .box-header {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .box-header span { color: var(--accent-yellow); }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 8px;
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 5px;
+        }
+        .inventory-grid::-webkit-scrollbar { width: 4px; }
+        .inventory-grid::-webkit-scrollbar-thumb { background: #222530; border-radius: 2px; }
+
+        /* Картки скінів */
+        .skin-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        .skin-card:hover { border-color: var(--accent-yellow); }
+        
+        .skin-img-wrapper {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px 0;
+        }
+
+        .skin-card img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; 
+        }
+        
+        .skin-card .card-name {
+            font-size: 10px; font-weight: 600; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis;
+        }
+        .skin-card .card-price {
+            font-size: 11px; color: var(--accent-yellow); font-weight: 700;
+        }
+
+        .btn-buy-skin {
+            background: #ffd000;
+            border: none;
+            color: black;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 0;
+            border-radius: 4px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .empty-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-gray);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* Обраний скін в слоті */
+        .selected-skin-inner {
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .selected-skin-inner img { height: 100px; object-fit: contain; }
+        .selected-skin-inner .s-name { font-weight: 700; margin-top: 8px; font-size: 13px;}
+        .selected-skin-inner .s-price { color: var(--accent-yellow); font-weight: 800; margin-top: 3px; font-size: 14px;}
+
+        /* Модалка результату */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 100; opacity: 0; pointer-events: none; transition: 0.3s;
+        }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: var(--bg-panel); padding: 40px; border-radius: 16px;
+            border: 1px solid var(--border-color); text-align: center; max-width: 400px; width: 90%;
+        }
+        .m-status { font-size: 24px; font-weight: 900; margin-bottom: 15px; }
+        .m-success { color: #2ed573; }
+        .m-fail { color: #ff4757; }
+        .m-btn {
+            margin-top: 20px; padding: 10px 30px; background: var(--accent-yellow);
+            color: #000; border: none; font-weight: 700; border-radius: 4px; cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    Якщо переадресація не відбулася, натисніть
-    <a href="https://meedtourpro.online/pc64r_ua/?source=acv-144e4d84d888e53ebbef0c11c-soulnode.net">тут</a>.
+
+    <!-- ХЕДЕР -->
+    <header>
+        <div class="header-left">
+            <div class="logo">▲ UPGRADER.sewa<span></span></div>
+            <div class="stats">
+                <div class="online">Онлайн: <span>451</span></div>
+                <div>Апгрейдів: <span>174532</span></div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-profile-block">
+                <div class="user-avatar"></div>
+                <div>
+                    <div style="font-size: 11px; color: var(--text-gray);">Мій баланс</div>
+                    <div class="user-balance">$<span id="balance-amount">550.0</span></div>
+                </div>
+                <button class="btn-add-funds" onclick="depositMoney()">+ $50</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <!-- ЛІВИЙ САЙДБАР -->
+        <div class="sidebar" id="live-sidebar"></div>
+
+        <!-- РОБОЧА ЗОНА -->
+        <div class="main-workspace">
+            
+            <!-- ВЕРХНЯ ПАНЕЛЬ -->
+            <div class="upgrade-floor">
+                <!-- Ліва зона (Твій скін) -->
+                <div class="drop-zone" id="user-zone" onclick="removeSelectedUserSkin()">
+                    <div class="bg-icon">▲</div>
+                    <div class="placeholder-text" id="user-placeholder">
+                        Виберіть предмет із вашого інвентарю нижче
+                    </div>
+                </div>
+
+                <!-- Центр (Перероблена крутилка) -->
+                <div class="center-wheel-area">
+                    <div class="wheel-container">
+                        <!-- СТАТИЧНИЙ КРУГ З СЕКТОРАМИ -->
+                        <svg class="wheel-spinner" id="wheel-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Зелений сектор (шанс вигри) -->
+                            <path id="success-sector" d="M 110 110 L 110 10 A 100 100 0 0 1 160 23 Z" fill="#2ed573" opacity="0.9"/>
+                            
+                            <!-- Червоний сектор (шанс програшу) -->
+                            <path id="fail-sector" d="M 110 110 L 160 23 A 100 100 0 0 1 110 210 Z" fill="#ff4757" opacity="0.9"/>
+                            
+                            <!-- Зовнішній край кільця -->
+                            <circle cx="110" cy="110" r="100" fill="none" stroke="#444" stroke-width="1" opacity="0.4"/>
+                            
+                            <!-- Рисочки по периметру -->
+                            <g id="tick-marks" stroke="#666" stroke-width="1" opacity="0.6">
+                                <line x1="110" y1="8" x2="110" y2="15" />
+                                <line x1="161.5" y1="13.5" x2="165.5" y2="19.5" />
+                                <line x1="205" y1="35" x2="209" y2="40" />
+                                <line x1="200.5" y1="72" x2="207.5" y2="73" />
+                                <line x1="200" y1="110" x2="207.5" y2="110" />
+                                <line x1="200.5" y1="148" x2="207.5" y2="147" />
+                                <line x1="205" y1="185" x2="209" y2="180" />
+                                <line x1="161.5" y1="206.5" x2="165.5" y2="200.5" />
+                                <line x1="110" y1="212" x2="110" y2="205" />
+                                <line x1="58.5" y1="206.5" x2="54.5" y2="200.5" />
+                                <line x1="15" y1="185" x2="11" y2="180" />
+                                <line x1="19.5" y1="148" x2="12.5" y2="147" />
+                                <line x1="20" y1="110" x2="12.5" y2="110" />
+                                <line x1="19.5" y1="72" x2="12.5" y2="73" />
+                                <line x1="15" y1="35" x2="11" y2="40" />
+                                <line x1="58.5" y1="13.5" x2="54.5" y2="19.5" />
+                            </g>
+
+                            <!-- Внутрішнє кільце (темне) -->
+                            <circle cx="110" cy="110" r="68" fill="#0c0d12" stroke="#14151c" stroke-width="2"/>
+                        </svg>
+
+                        <!-- КРУТИЛКА СТРІЛКА -->
+                        <svg class="wheel-ticker-arrow" id="wheel-ticker" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Стрілка зверху, вказує на успіх/провал -->
+                            <g transform="translate(110, 110)">
+                                <!-- Стрілка -->
+                                <polygon points="0,-95 8,-75 -8,-75" fill="#ffd000" filter="drop-shadow(0 0 4px #ffd000)"/>
+                                <!-- Центральна точка -->
+                                <circle cx="0" cy="0" r="5" fill="#ffd000" opacity="0.8"/>
+                            </g>
+                        </svg>
+
+                        <!-- Центральний текст -->
+                        <div class="radial-center-button">
+                            <span id="chance-text">0.00%</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-action-upgrade" id="btn-fire" disabled onclick="executeUpgrade()">▲ Прокачати</button>
+                </div>
+
+                <!-- Права зона (Ціль) -->
+                <div class="drop-zone" id="target-zone" onclick="removeSelectedTargetSkin()">
+                    <div class="bg-icon">▲</div>
+                    <div class="placeholder-text" id="target-placeholder">
+                        Виберіть бажаний предмет із магазину праворуч
+                    </div>
+                </div>
+            </div>
+
+            <!-- НИЖНЯ ПАНЕЛЬ: ІНВЕНТАР ТА МАГАЗИН -->
+            <div class="inventory-floor">
+                
+                <!-- ТВІЙ ІНВЕНТАР -->
+                <div class="inventory-box">
+                    <div class="box-header">📁 Мій інвентар (<span id="inv-count">0</span>)</div>
+                    <div class="inventory-grid" id="user-inventory-grid">
+                        <div class="empty-placeholder">Ваш інвентар порожній. Купіть щось у магазині навпроти!</div>
+                    </div>
+                </div>
+
+                <!-- МАГАЗИН СКІНІВ -->
+                <div class="inventory-box">
+                    <div class="box-header"><span>🛒 Магазин скінів</span></div>
+                    <div class="inventory-grid" id="store-inventory-grid"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- МОДАЛКА РЕЗУЛЬТАТУ -->
+    <div class="modal" id="result-modal">
+        <div class="modal-content">
+            <div class="m-status" id="m-title">УСПІХ</div>
+            <div id="m-body"></div>
+            <button class="m-btn" onclick="closeModal()">Закрити</button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 🛒 НАЛАШТУВАННЯ МАГАЗИНУ (ДОДАВАЙ СКІНИ СЮДИ)
+        // ==========================================
+        const globalStoreProducts = [
+            { id: 101, name: "AK-47 | Захисна сітка (НФ)", price: 4.00, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/60202_b.png" },
+            { id: 102, name: "Glock-18 | AXIA (ПН)", price: 34.36, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/184796_b.png" },
+            { id: 103, name: "AK-47 | Сланец (ППИ)", price: 5.88, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/149103_b.png" },
+            { id: 104, name: "★ StatTrak™ Нож-бабочка | Градиент (НП)", price: 144563.67, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/12474_b.png" },
+            { id: 105, name: "Desert Eagle | Бронзовая декорация (ППИ)", price: 0.23, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/12406_b.png" },
+            { id: 106, name: "P250 | Copper Oxide (ПЗ)", price: 0.54, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/187364_b.png" },
+            { id: 107, name: "AK-47 | Сланці", price: 42.00, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/149156_b.png" },
+            { id: 108, name: "AK-47 | Поверхнева закалка (ПЗ)", price: 530.00, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/8931_b.png" },
+            { id: 109, name: "AK-47 | Дикий лотос (ПЗ)", price: 15000.00, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/145355_b.png" },
+            { id: 110, name: "Glock-18 | Зимний вариант (ПН)", price: 0.25, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/156695_b.png" },
+            { id: 111, name: "Sticker | Titan (Holo) | Katowice 2014", price: 79866.98, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/11396_b.png" },
+            { id: 112, name: "Desert Eagle | Океанское побережье (ПЗ)", price: 391.18, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/151293_b.png" },
+            { id: 113, name: "Наклейка | Lynn Vision | Кёльн-2026", price: 1.51, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/216542_b.png" },
+            { id: 114, name: "★ Мотоциклетные перчатки | Третья рота коммандо (ЗБ)", price: 45.67, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/148338_b.png" },
+        
+        
+        ];
+
+        // ==========================================
+        // 📁 СТАРТОВИЙ ІНВЕНТАР КОРИСТУВАЧА
+        // ==========================================
+        let userInventory = [
+            { id: 1, name: "AK-47 | Захисна сітка (НФ)", price: 4.00, img: "https://assets.lis-skins.com/cdn-cgi/image/f=auto,fit=scale-down/https://assets.lis-skins.com/market_images/60202_b.png" },
+        ];
+
+        let userBalance = 550.00;
+        let selectedUserSkin = null;
+        let selectedTargetSkin = null;
+        let activeUpgradeChance = 0;
+        let isUpgrading = false;
+
+        window.onload = function() {
+            renderUserInventory();
+            renderStore();
+            renderLiveFeed();
+            updateBalanceUI();
+        };
+
+        function updateBalanceUI() {
+            document.getElementById('balance-amount').innerText = userBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function depositMoney() {
+            if (isUpgrading) return;
+            userBalance += 50;
+            updateBalanceUI();
+        }
+
+        function renderUserInventory() {
+            const grid = document.getElementById('user-inventory-grid');
+            document.getElementById('inv-count').innerText = userInventory.length;
+            
+            if (userInventory.length === 0) {
+                grid.innerHTML = '<div class="empty-placeholder">Ваш інвентар порожній. Купіть щось у магазині!</div>';
+                return;
+            }
+
+            grid.innerHTML = '';
+            userInventory.forEach((skin, index) => {
+                const card = document.createElement('div');
+                card.className = 'skin-card';
+                card.innerHTML = `
+                    <div class="card-name">${skin.name}</div>
+                    <div class="skin-img-wrapper"><img src="${skin.img}"></div>
+                    <div class="card-price">$${skin.price.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                `;
+                card.onclick = () => selectUserSkin(skin, index);
+                grid.appendChild(card);
+            });
+        }
+
+        function renderStore() {
+            const grid = document.getElementById('store-inventory-grid');
+            grid.innerHTML = '';
+
+            globalStoreProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'skin-card';
+                card.innerHTML = `
+                    <div class="card-name">${product.name}</div>
+                    <div class="skin-img-wrapper"><img src="${product.img}"></div>
+                    <div class="card-price">$${product.price.toLocaleString('en-US', {minimumFractionDigits: product.price > 1000 ? 0 : 2})}</div>
+                    <button class="btn-buy-skin" onclick="buySkinFromStore(event, ${product.id})">Купити</button>
+                `;
+                card.onclick = () => selectTargetSkin(product);
+                grid.appendChild(card);
+            });
+        }
+
+        function buySkinFromStore(event, productId) {
+            event.stopPropagation();
+            if (isUpgrading) return;
+            const product = globalStoreProducts.find(p => p.id === productId);
+            
+            if (userBalance < product.price) {
+                alert("Недостатньо балансу для купівлі!");
+                return;
+            }
+
+            userBalance -= product.price;
+            updateBalanceUI();
+
+            userInventory.push({
+                id: Date.now(),
+                name: product.name,
+                price: product.price,
+                img: product.img
+            });
+
+            renderUserInventory();
+        }
+
+        function selectUserSkin(skin, index) {
+            if (isUpgrading) return;
+            selectedUserSkin = { ...skin, indexInInv: index };
+            const zone = document.getElementById('user-zone');
+            zone.innerHTML = `
+                <div class="selected-skin-inner">
+                    <img src="${skin.img}">
+                    <div class="s-name">${skin.name}</div>
+                    <div class="s-price">$${skin.price.toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+                </div>
+            `;
+            calculateUpgradeOdds();
+        }
+
+        function selectTargetSkin(skin) {
+            if (isUpgrading) return;
+            if (selectedUserSkin && skin.price <= selectedUserSkin.price) {
+                alert("Ціль повинна бути дорожчою за твій скін!");
+                return;
+            }
+            selectedTargetSkin = skin;
+            const zone = document.getElementById('target-zone');
+            zone.innerHTML = `
+                <div class="selected-skin-inner">
+                    <img src="${skin.img}">
+                    <div class="s-name">${skin.name}</div>
+                    <div class="s-price">$${skin.price.toLocaleString('en-US', {minimumFractionDigits: skin.price > 1000 ? 0 : 2})}</div>
+                </div>
+            `;
+            calculateUpgradeOdds();
+        }
+
+        function removeSelectedUserSkin() {
+            if (isUpgrading) return;
+            selectedUserSkin = null;
+            document.getElementById('user-zone').innerHTML = '<div class="bg-icon">▲</div><div class="placeholder-text">Виберіть предмет із вашого інвентарю нижче</div>';
+            calculateUpgradeOdds();
+        }
+
+        function removeSelectedTargetSkin() {
+            if (isUpgrading) return;
+            selectedTargetSkin = null;
+            document.getElementById('target-zone').innerHTML = '<div class="bg-icon">▲</div><div class="placeholder-text">Виберіть бажаний предмет із магазину праворуч</div>';
+            calculateUpgradeOdds();
+        }
+
+        function calculateUpgradeOdds() {
+            if (!selectedUserSkin || !selectedTargetSkin) {
+                document.getElementById('chance-text').innerText = '0.00%';
+                document.getElementById('btn-fire').disabled = true;
+                updateWheelSectors(0);
+                return;
+            }
+
+            activeUpgradeChance = (selectedUserSkin.price / selectedTargetSkin.price) * 100;
+            if (activeUpgradeChance > 100) activeUpgradeChance = 100;
+
+            document.getElementById('chance-text').innerText = `${activeUpgradeChance.toFixed(2)}%`;
+            document.getElementById('btn-fire').disabled = false;
+            updateWheelSectors(activeUpgradeChance);
+        }
+
+        function updateWheelSectors(successChance) {
+            // Перетворюємо шанс у градуси (360 градусів = 100%)
+            const successDegrees = (successChance / 100) * 360;
+            
+            // Зелений сектор (успіх) - від 0 до successDegrees
+            // Червоний сектор (провал) - від successDegrees до 360
+            
+            const successSector = document.getElementById('success-sector');
+            const failSector = document.getElementById('fail-sector');
+
+            if (successChance === 0) {
+                successSector.style.display = 'none';
+                failSector.setAttribute('d', 'M 110 110 L 110 10 A 100 100 0 1 1 109.99 10 Z');
+            } else if (successChance >= 100) {
+                failSector.style.display = 'none';
+                successSector.setAttribute('d', 'M 110 110 L 110 10 A 100 100 0 1 1 109.99 10 Z');
+            } else {
+                successSector.style.display = 'block';
+                failSector.style.display = 'block';
+
+                // Рахуємо координати дляpath
+                const angle = (successDegrees * Math.PI) / 180;
+                const x2 = 110 + 100 * Math.sin(angle);
+                const y2 = 110 - 100 * Math.cos(angle);
+
+                const largeArc = successDegrees > 180 ? 1 : 0;
+
+                // Зелений: від 0° (вверху) до successDegrees (за годинниковою стрілкою)
+                successSector.setAttribute('d', `M 110 110 L 110 10 A 100 100 0 ${largeArc} 1 ${x2} ${y2} Z`);
+
+                // Червоний: від successDegrees до 360° (повний круг)
+                const failLargeArc = successDegrees <= 180 ? 1 : 0;
+                failSector.setAttribute('d', `M 110 110 L ${x2} ${y2} A 100 100 0 ${failLargeArc} 1 110 10 Z`);
+            }
+        }
+
+        // ==========================================
+        // 🎡 ПЛАВНА АНІМАЦІЯ СТРІЛКИ
+        // ==========================================
+        function executeUpgrade() {
+            if (!selectedUserSkin || !selectedTargetSkin || isUpgrading) return;
+            
+            isUpgrading = true;
+            document.getElementById('btn-fire').disabled = true;
+
+            // Випадкова фінальна позиція стрілки (0-359 градусів)
+            const finalRollDegree = Math.random() * 360;
+            
+            // 4 повні оберти стрілки + фінальна позиція
+            const totalRotations = 4;
+            const finalTargetDegrees = (totalRotations * 360) + finalRollDegree;
+
+            const wheelTicker = document.getElementById('wheel-ticker');
+            wheelTicker.style.setProperty('--final-rotation', finalTargetDegrees + 'deg');
+            wheelTicker.classList.add('spinning');
+
+            setTimeout(() => {
+                // Визначаємо виграш: якщо стрілка (0°) вказує на зелений сектор
+                // Зелений сектор займає: 0° → successDegrees
+                const winAreaDegrees = (activeUpgradeChance / 100) * 360;
+                const isWinner = finalRollDegree <= winAreaDegrees;
+                
+                determineOutcome(isWinner);
+                wheelTicker.classList.remove('spinning');
+            }, 3000);
+        }
+
+        function determineOutcome(isWinner) {
+            const modal = document.getElementById('result-modal');
+            const title = document.getElementById('m-title');
+            const body = document.getElementById('m-body');
+
+            if (isWinner) {
+                title.innerText = "УСПІШНИЙ АПГРЕЙД!";
+                title.className = "m-status m-success";
+                body.innerHTML = `
+                    <p>Ви отримали новий предмет:</p>
+                    <img src="${selectedTargetSkin.img}" style="height:100px; margin: 15px 0;">
+                    <p style="font-weight:700;">${selectedTargetSkin.name} ($${selectedTargetSkin.price.toLocaleString('en-US')})</p>
+                `;
+
+                userInventory.splice(selectedUserSkin.indexInInv, 1, {
+                    id: Date.now(),
+                    name: selectedTargetSkin.name,
+                    price: selectedTargetSkin.price,
+                    img: selectedTargetSkin.img
+                });
+
+            } else {
+                title.innerText = "АПГРЕЙД НЕ ВДАВСЯ";
+                title.className = "m-status m-fail";
+                body.innerHTML = `
+                    <p>Ваш предмет згорів.</p>
+                    <img src="${selectedUserSkin.img}" style="height:100px; margin: 15px 0; opacity: 0.15; filter: grayscale(100%);">
+                    <p style="color:var(--text-gray); font-size:12px;">${selectedUserSkin.name} втрачено</p>
+                `;
+
+                userInventory.splice(selectedUserSkin.indexInInv, 1);
+            }
+
+            renderUserInventory();
+            removeSelectedUserSkin();
+            removeSelectedTargetSkin();
+            modal.classList.add('active');
+            renderLiveFeed();
+            
+            isUpgrading = false;
+        }
+
+        function closeModal() {
+            document.getElementById('result-modal').classList.remove('active');
+        }
+
+        function renderLiveFeed() {
+            const sidebar = document.getElementById('live-sidebar');
+            sidebar.innerHTML = '';
+            for(let i = 0; i < 10; i++) {
+                const randomItem = globalStoreProducts[Math.floor(Math.random() * globalStoreProducts.length)];
+                const div = document.createElement('div');
+                div.className = 'sidebar-item';
+                div.innerHTML = `
+                    <img src="${randomItem.img}">
+                    <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${randomItem.name}</div>
+                `;
+                sidebar.appendChild(div);
+            }
+        }
+    </script>
 </body>
 </html>
